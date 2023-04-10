@@ -1,0 +1,13 @@
+FROM debian:latest
+
+# Install  updates
+RUN apt-get update && apt-get upgrade -y
+
+# Install webserver
+RUN apt-get install apache2 -y
+
+# Expose ports
+EXPOSE 80/tcp
+
+# Test
+CMD ["sh"]

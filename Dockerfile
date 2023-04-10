@@ -22,6 +22,9 @@ WORKDIR /app/
 # Load moodle installer
 COPY moodle-download/moodle.zip .
 
+# Restart webserver
+RUN /etc/init.d/apache2 restart
+
 # Run script
 COPY app.sh .
 RUN bash app.sh

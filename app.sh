@@ -35,4 +35,4 @@ sed -i "s#var/www/html#var/www/html/moodle#g" 000-default.conf
 
 # change moodle configuration
 cd /var/www/html/moodle/
-sed -i "s/mysqli/mariadb/g" config.php
+#sed -i "s/mysqli/mariadb/g" config.php
