@@ -33,4 +33,4 @@ RUN bash app.sh
 EXPOSE 80/tcp
 
 # Test
-CMD ["sh"]
+CMD ["/etc/init.d/apache2 restart"]

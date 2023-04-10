@@ -1,8 +1,8 @@
-version: '3.8'
+version: '3.3'
 services:
   app:
-    image: 'michivonah/moodle-docker:latest'
-    restart: unless-stopped
+    image: 'ghcr.io/michivonah/moodle-docker'
+    restart: on-failure:5
     ports:
       - '8080:80'
     environment:
@@ -16,10 +16,11 @@ services:
 
   db:
     image: 'mariadb:latest'
-    restart: unless-stopped
+    restart: on-failure:5
     environment:
-      MARIADB_DATABASE: "moodledb"
-      MARIADB_USER: "moodle"
-      MARIADB_PASSWORD: "moodle"
+      MYSQL_ROOT_PASSWORD: "moodle"
+      MYSQL_DATABASE: "moodledb"
+      MYSQL_USER: "moodle"
+      MYSQL_PASSWORD: "moodle"
     volumes:
       - ./db:/var/lib/mysql
