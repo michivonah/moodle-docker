@@ -10,7 +10,7 @@ sudo mysql -e "GRANT ALL PRIVILEGES ON moodledb.* TO moodle@localhost"
 sudo mysql -e "FLUSH PRIVILEGES"
 
 # Download moodle
-curl -o moodle.zip https://download.moodle.org/download.php/stable401/moodle-latest-401.zip
+curl -o moodle.zip https://github.com/michivonah/moodle-docker/raw/main/moodle-download/moodle.zip
 mkdir /var/www/moodle/
 unzip moodle.zip -d /var/www/html/
 cd /var/www/
@@ -20,7 +20,23 @@ chown -R www-data:www-data moodledata
 chmod -R 755 moodle
 chmod -R 755 moodledata
 
+# change PHP configuration
+cd /etc/php/7.4/apache2/
+echo '; ;;;;;;;;;;;;;;' >> php.ini
+echo '; CUSTOM CHANGES FOR MOODLE ;' >> php.ini
+echo 'extension=mysql.so' >> php.ini
+echo 'extension=gd.so' >> php.ini
+echo '; ;;;;;;;;;;;;;;' >> php.ini
+sed -i "s#memory_limit = 128M#memory_limit = 196M#g" php.ini
+sed -i "s#post_max_size = 8M#post_max_size = 80M#g" php.ini
+sed -i "s#upload_max_filesize = 2M#upload_max_filesize = 80M#g" php.ini
+sed -i "s#;max_input_vars = 1000#max_input_vars = 5000#g" php.ini
+
 # change apache2 configuration
-#sed 's+/var/www/html+/var/www/moodle+g' 000-default.conf
-#sed -i 's#root /var/www/html#root /var/www/moodle#' 000-default.conf
-#/etc/init.d/apache2 restart
+cd /etc/apache2/sites-available/
+sed -i "s#var/www/html#var/www/html/moodle#g" 000-default.conf
+/etc/init.d/apache2 restart
+
+# change moodle configuration
+cd /var/www/html/moodle/
+sed -i "s/mysqli/mariadb/g" config.php
