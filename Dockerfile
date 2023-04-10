@@ -15,9 +15,14 @@ RUN apt-get install mariadb-server mariadb-client -y
 #RUN systemctl enable mariadb
 #RUN systemctl restart mariadb
 
-# Run script
+# Create app folder
 RUN mkdir app
 WORKDIR /app/
+
+# Load moodle installer
+COPY moodle-download/moodle.zip .
+
+# Run script
 COPY app.sh .
 RUN bash app.sh
 

@@ -1,4 +1,25 @@
-version: '3.3'
+version: '3.8'
 services:
-    moodle:
-        image: moodle
+  app:
+    image: 'michivonah/moodle-docker:latest'
+    restart: unless-stopped
+    ports:
+      - '8080:80'
+    environment:
+      DB_DATABASE: "moodledb"
+      DB_USER: "moodle"
+      DB_PASSWORD: "moodle"
+    volumes:
+      - ./data:/var/www
+    depends_on:
+      - db
+
+  db:
+    image: 'mariadb:latest'
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: "moodledb"
+      MARIADB_USER: "moodle"
+      MARIADB_PASSWORD: "moodle"
+    volumes:
+      - ./db:/var/lib/mysql

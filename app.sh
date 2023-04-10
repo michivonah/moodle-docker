@@ -3,14 +3,8 @@
 # Install moodle
 # Michi von Ah - April 2023
 
-# Create db
-mysql -e "CREATE DATABASE moodledb;"
-mysql -e "CREATE USER moodle@localhost IDENTIFIED BY 'moodle';"
-mysql -e "GRANT ALL PRIVILEGES ON moodledb.* TO moodle@localhost"
-mysql -e "FLUSH PRIVILEGES"
-
 # Download moodle
-wget https://github.com/michivonah/moodle-docker/raw/main/moodle-download/moodle.zip
+# wget https://github.com/michivonah/moodle-docker/raw/main/moodle-download/moodle.zip
 unzip moodle.zip -d /var/www/html/
 cd /var/www/
 mkdir moodle
