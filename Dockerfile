@@ -12,10 +12,12 @@ RUN apt-get install php libapache2-mod-php php-iconv php-intl php-soap php-zip p
 
 # Install MariaDB
 RUN apt-get install mariadb-server mariadb-client -y
-RUN systemctl enable mariadb
-RUN systemctl restart mariadb
+#RUN systemctl enable mariadb
+#RUN systemctl restart mariadb
 
 # Run script
+RUN mkdir app
+WORKDIR /app/
 COPY app.sh .
 RUN bash app.sh
 
@@ -23,4 +25,4 @@ RUN bash app.sh
 EXPOSE 80/tcp
 
 # Test
-CMD ["ls"]
+CMD ["sh"]
