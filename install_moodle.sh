@@ -8,6 +8,7 @@
 read -p "Database Name: " dbName
 read -p "Database Username: " dbUser
 read -p "Database Password: " dbPassword
+dbPasswordSyntax="'${dbPassword}'"
 
 # Install updates
 apt-get update && apt-get upgrade -y
@@ -23,7 +24,7 @@ apt-get install mariadb-server mariadb-client -y
 
 # Create database
 sudo mysql -e "CREATE DATABASE ${dbname};"
-sudo mysql -e "CREATE USER ${dbUser}@localhost IDENTIFIED BY ${dbPassword};"
+sudo mysql -e "CREATE USER ${dbUser}@localhost IDENTIFIED BY ${dbPasswordSyntax}";
 sudo mysql -e "GRANT ALL PRIVILEGES ON ${dbname}.* TO ${dbUser}@localhost"
 sudo mysql -e "FLUSH PRIVILEGES"
 
